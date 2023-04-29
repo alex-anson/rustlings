@@ -8,4 +8,28 @@ fn main() {
     fn call_me() {
         println!("ayo")
     }
+
+    let t = inner_scope_is_an_expression();
+    // t
+}
+
+fn inner_scope_is_an_expression() -> usize {
+    let y = {
+        let x = 3;
+        x * 4
+    };
+
+    /**
+     ⌄ this part is an expression. it evaluates to a value.
+
+    {
+        let x = 3;
+        x * 4
+    };
+
+    evaluates to 12, which then gets bound to `y` as part of the `let` statement.
+    */
+
+    println!("The value of y is: {y}");
+    12
 }
