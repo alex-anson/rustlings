@@ -14,7 +14,11 @@ fn main() {
     println!();
     another_fn();
     println!();
-    another_another()
+    another_another();
+    println!();
+    while_loop();
+    println!();
+    equivalent_while();
 }
 
 fn another_fn() {
@@ -57,6 +61,30 @@ fn another_another() {
         count += 1;
     }
     println!("End count = {count}");
+}
+
+fn while_loop() {
+    let mut number = 3;
+
+    while number > 0 {
+        println!("{number}!");
+        number -= 1;
+    }
+    println!("🚀")
+}
+// equivalent without using while
+fn equivalent_while() {
+    println!("begin equiv ƒn");
+    let mut number = 3;
+
+    loop {
+        if number > 0 {
+            println!("{number}!");
+            number -= 1;
+        } else {
+            break println!("🚀");
+        }
+    }
 }
 
 // so this is how you type a return value.
