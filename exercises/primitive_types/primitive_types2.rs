@@ -26,4 +26,17 @@ fn main() {
     } else {
         println!("Neither alphabetic nor numeric!");
     }
+
+    // Compound types can group multiple values into one type. Rust has two
+    // primitive compound types: tuples and arrays.
+
+    // Tuple => general way of grouping x number of values with a variety of
+    // types into one compound type. They have a fixed length.
+    let tup: (i32, f64, u8, char) = (500, 6.4, 1, 'x');
+    // ^ considered a single compound element
+    let x: () = ();
+
+    // Arrays => every element must have the same type. Arrays have a fixed
+    // length. (Vectors are more flexible - can grow and shrink. A vector is a
+    // similar collection type provided by the standard library.)
 }

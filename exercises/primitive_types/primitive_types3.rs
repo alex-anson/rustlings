@@ -11,4 +11,20 @@ fn main() {
     } else {
         println!("Meh, I eat arrays like that for breakfast.");
     }
+
+    diff_nums();
+}
+
+// working this out was surprisingly difficult. i'm guessing there's an easier way.
+fn diff_nums() {
+    let mut a: [i32; 6] = [1; 6];
+
+    let mut u: usize = 0;
+    let mut i: i32 = 0;
+    for mut el in a {
+        a[u] = i;
+        u += 1;
+        i += 1;
+    }
+    println!("{:?}", a) // [0, 1, 2, 3, 4, 5]
 }

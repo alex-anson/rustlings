@@ -25,6 +25,9 @@ fn main() {
     for_in_loop_list();
     println!();
     countdown();
+    println!();
+    println!("begin countdown_v2");
+    countdown_v2();
 }
 
 fn another_fn() {
@@ -118,6 +121,14 @@ fn countdown() {
     // not inclusive - `(1..3)` would not print "3!".
     // `.rev()` reverses the range
     for n in (1..4).rev() {
+        println!("{n}!")
+    }
+    println!("🚀🚀")
+}
+
+fn countdown_v2() {
+    // INCLUSIVE - `(1..=3)`
+    for n in (1..=3).rev() {
         println!("{n}!")
     }
     println!("🚀🚀")
