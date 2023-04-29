@@ -6,7 +6,7 @@
 // (Don't worry about the function bodies themselves, we're only interested
 // in the signatures for now. If anything, this is a good way to peek ahead
 // to future exercises!)
-// I AM NOT DONE
+
 fn main() {
     let original_price: i32 = 112;
     println!("Your sale price is {}", sale_price(original_price));
@@ -19,6 +19,12 @@ fn main() {
     while_loop();
     println!();
     equivalent_while();
+    println!();
+    while_loop_list();
+    println!();
+    for_in_loop_list();
+    println!();
+    countdown();
 }
 
 fn another_fn() {
@@ -85,6 +91,36 @@ fn equivalent_while() {
             break println!("🚀");
         }
     }
+}
+
+fn while_loop_list() {
+    let a = [10, 20, 30, 40, 50];
+    let mut i = 0;
+
+    while i < a.len() {
+        println!("index {}, value {}", i, a[i]);
+        i += 1
+    }
+    // println!("{a.len()}");
+    // ^ error: invalid format string
+    println!("{}", a.len());
+}
+// for loops are the most commonly used looping construct in rust.
+fn for_in_loop_list() {
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a {
+        println!("val {element}");
+    }
+}
+
+fn countdown() {
+    // not inclusive - `(1..3)` would not print "3!".
+    // `.rev()` reverses the range
+    for n in (1..4).rev() {
+        println!("{n}!")
+    }
+    println!("🚀🚀")
 }
 
 // so this is how you type a return value.
