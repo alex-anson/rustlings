@@ -10,10 +10,26 @@
 // Write a function that calculates the price of an order of apples given
 // the quantity bought. No hints this time!
 
-// I AM NOT DONE
-
 // Put your function here!
-// fn calculate_price_of_apples {
+fn calculate_price_of_apples(quantity_bought: u32) -> u32 {
+    let mut price = 2;
+
+    if quantity_bought <= 40 {
+        quantity_bought * price
+    } else {
+        price = 1;
+        quantity_bought * price
+    }
+}
+
+// if the object is to be as concise as possible =>
+fn concise(quantity_bought: u32) -> u32 {
+    if quantity_bought <= 40 {
+        quantity_bought * 2
+    } else {
+        quantity_bought
+    }
+}
 
 // Don't modify this function!
 #[test]
