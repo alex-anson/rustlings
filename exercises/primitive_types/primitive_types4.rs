@@ -10,6 +10,8 @@ fn slice_out_of_array() {
     // let nice_slice = &a[1..4];
     // COOOOOL
     let nice_slice = &a[1..a.len() - 1];
+    // ^ this slice works the same way string slices work, by storing a
+    // reference to the first element and a length.
 
     assert_eq!([2, 3, 4], nice_slice)
 }
