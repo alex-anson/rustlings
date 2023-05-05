@@ -1,3 +1,7 @@
+// use console::{style, Emoji};
+// use crate::console;
+// use crate::style;
+
 // vecs2.rs
 // A Vec of even numbers is given. Your task is to complete the loop
 // so that each number in the Vec is multiplied by 2.
@@ -33,6 +37,34 @@ fn vec_map_again(v: &Vec<i32>) -> Vec<i32> {
     v.iter().map(|num| 2 * num).collect()
 }
 
+// it's gonna be really cool to come back to this code when i know what i'm doing 😆
+// macro_rules! sweet {
+//     ($fmt:literal, $ex:expr) => {{
+//         let formatstr = format!($fmt, $ex);
+//         println!(
+//             "{} {}",
+//             style(Emoji("✅", "✓")).green(),
+//             style(formatstr).green()
+//         );
+//     }};
+// }
+
+// More iterating, following The Book
+fn it() -> i8 {
+    // let formatstr = format!(fmt: literal, ex: expr);
+    let (x, y) = (1, 2);
+
+    // for loop to get immutable references to each element
+    let b = vec![100, 32, 57];
+    for i in &b {
+        println!("{i}");
+        // sweet!("legggooo {}", x)
+    }
+
+    // easy to make test pass or fail. (failing test = will print my `println`s)
+    12
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -59,5 +91,11 @@ mod tests {
         let ans = vec_map_again(&v);
 
         assert_eq!(ans, v.iter().map(|x| x * 2).collect::<Vec<i32>>());
+    }
+
+    #[test]
+    fn leeggo() {
+        let b = it();
+        assert_eq!(12, b);
     }
 }
