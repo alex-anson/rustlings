@@ -10,8 +10,6 @@
 //
 // Execute `rustlings hint vecs2` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 fn vec_loop(mut v: Vec<i32>) -> Vec<i32> {
     for i in v.iter_mut() {
         // TODO: Fill this up so that each element in the Vec `v` is
@@ -51,7 +49,6 @@ fn vec_map_again(v: &Vec<i32>) -> Vec<i32> {
 
 // More iterating, following The Book
 fn it() -> i8 {
-    // let formatstr = format!(fmt: literal, ex: expr);
     let (x, y) = (1, 2);
 
     // for loop to get immutable references to each element
@@ -60,6 +57,21 @@ fn it() -> i8 {
         println!("{i}");
         // sweet!("legggooo {}", x)
     }
+
+    // unrelated to the actual book exercise
+    let mut a = vec![1, 2, 3];
+
+    // iterate over mutable references to each element in a mutable vector
+    let mut c = vec![100, 32, 57];
+    for i in &mut c {
+        *i += 50;
+        // to change the value that the mutable reference refers to, we have to use
+        // the `*` dereference operator to get to the value in `i` before we can use
+        // the `+=` operator.
+
+        a.push(87)
+    }
+    println!("a is... {a:?}");
 
     // easy to make test pass or fail. (failing test = will print my `println`s)
     12
