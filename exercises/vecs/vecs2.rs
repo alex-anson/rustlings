@@ -73,7 +73,62 @@ fn it() -> i8 {
     }
     println!("a is... {a:?}");
 
+    // like any other `struct`, a vector is freed when it goes out of scope. the
+    // borrow checker ensures that any references to contents of a vector are only
+    // used while the vector itself is valid
+    {
+        let e = vec![3, 6, 9];
+
+        // do stuff with e
+    } // <- e goes out of scope here.
+
     // easy to make test pass or fail. (failing test = will print my `println`s)
+    12
+}
+
+/*
+Vectors can only store values that are the same type. This can be inconvenient;
+there are definitely use cases for needing to store a list of items of different
+types. __Fortunately, the variants of an enum are defined under the same enum
+type,__ so when we need one type to represent elements of different types, we can
+define and use an enum!
+https://doc.rust-lang.org/stable/book/ch08-01-vectors.html#using-an-enum-to-store-multiple-types
+*/
+
+// use std::fmt::Debug;
+// use std::fmt::Formatter;
+fn book_enum_vec_intro() -> i8 {
+    #[derive(Debug)]
+    enum SpreadsheetCell {
+        Int(i32),
+        Float(f64),
+        Text(String),
+    }
+
+    let row = vec![
+        SpreadsheetCell::Text(String::from("hello world")),
+        SpreadsheetCell::Int(3),
+        SpreadsheetCell::Float(9.12),
+    ];
+
+    // impl Debug for SpreadsheetCell {
+    //     fn fmt(&self, _: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    //         // allows the code to compile
+    //         todo!()
+
+    //         // some of my attempts
+    //         // (Ok(println!("{row:?}")), Err())
+    //         // Ok((|| row)())
+    //     }
+    // }
+    // ended up implementing this with a single line: #[derive(Debug)]
+
+    println!("{row:?}");
+
+    for i in row {
+        println!("{:?}", i);
+    }
+
     12
 }
 
@@ -108,6 +163,12 @@ mod tests {
     #[test]
     fn leeggo() {
         let b = it();
+        assert_eq!(12, b);
+    }
+
+    #[test]
+    fn a() {
+        let b = book_enum_vec_intro();
         assert_eq!(12, b);
     }
 }
