@@ -1,7 +1,32 @@
+/*
+https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html
+^ 2nd article of today. these notes are from the section where they give a brief
+overview of the stack and heap.
+
+
+STACK => LIFO. stack of plates.
+- all data stored on the stack *must* have a known, fixed size.
+- terms: "pushing onto the stack" (adding data), "popping off the stack" (removing data)
+
+HEAP => not as organized. you're requesting a certain amount of space.
+- memory allocator finds an empty spot that's big enough, marks it as being in
+use, and returns a pointer (which is the address of that location).
+- term for this ^: "allocating on the heap" or just "allocating"
+- the pointer IS a known, fixed size, so it can be stored on the stack. but when
+you want the actual data, you need to follow the pointer.
+
+
+the main purpose of ownership is to manage heap data.
+
+*/
+
 // https://doc.rust-lang.org/1.22.0/book/first-edition/the-stack-and-the-heap.html
 
 fn foo(x: &i32) {
-    // allocate memory for x (the arg ^), y & z.
+    // x (the arg ^), y & z ... pushed onto the stack.
+    // reading the second article now ... i think that even though x and y are
+    // pointers, they're still considered to be on the stack.
+
     // x has same value as j (since that's what was passed) - a pointer
     let y = 10;
     let z = &y;
@@ -63,14 +88,15 @@ fn bar(a: &i32, b: &i32) {
 }
 
 fn baz(f: &i32) {
-    // memory allocated for f & g
+    // f & g pushed onto the stack.
     let g = 100;
-} // baz's stack frame is gone now. stack/heap looks like it did before we called baz
+} // <- baz's stack frame is gone now (f & g popped off of the stack). stack/heap
+  // looks like it did before we called baz
 
 // main goes first...
 fn main() {
-    // allocate memory for j, i, & h.
-    // i is on the heap, and so has a value pointing there.
+    // j & h are pushed onto the stack. i is allocated on the heap.
+    // (i's pointer is stored on the stack. i's value is on the heap.)
     let h = 3;
     let i = Box::new(20);
     let j = &h;
