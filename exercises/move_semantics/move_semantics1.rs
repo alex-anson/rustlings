@@ -95,6 +95,13 @@ fn ownership() {
     // println!("this will trigger an error {}", s1);
     // INSTEAD OF IT BEING CALLED A SHALLOW COPY, IT'S CALLED A MOVE. because of
     // the invalidation of the first variable.
+
+    // if you DO want to deeply copy heap data (which is expensive in terms of memory
+    // and performance), use the `clone` method --
+    let s1 = String::from("hello");
+    let s2 = s1.clone();
+
+    println!("s1 = {}, s2 = {}", s1, s2);
 }
 
 // I AM NOT DONE
