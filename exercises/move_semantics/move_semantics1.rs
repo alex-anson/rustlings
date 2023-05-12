@@ -68,6 +68,33 @@ fn ownership() {
     called at the closing curly bracket. (seems simple, but can cause unexpected
     behavior in more complicated situations.)
     */
+
+    let s1 = String::from("hello");
+    let s2 = s1;
+    /*
+    the second line doesn't exactly make a copy of the value in s1 and bind it
+    to s2...
+    - a String is made up of three parts: a pointer to the memory that holds the
+    contents of the string, a length, and a capacity. this group of data is stored
+    on the stack. the heap holds the contents of s1.
+    length = how much memory, in bytes, the contents of `String` are currently using.
+    capacity = total amount of memory, in bytes, that the string has received from
+    the allocator.
+    - s1 and s2 share the data on the heap, that data is not copied. s2 has its own
+    pointer (which points to the same location in memory as does s1), length, and
+    capacity.
+    ... sounds similar to how objects in javascript work. (except not now that i've
+    continued reading!)
+    - to avoid causing a "double free" error that would occur if rust called the
+    `drop` function twice on the same memory (the same data on the heap), to ensure
+    memory safety, rust considers s1 no longer valid right after the `let s2 = s1;`
+    line.
+    - the "double free" error is a memory safety bug. freeing memory twice can lead
+    to memory corruption, which can potentially lead to security vulnerabilities.
+    */
+    // println!("this will trigger an error {}", s1);
+    // INSTEAD OF IT BEING CALLED A SHALLOW COPY, IT'S CALLED A MOVE. because of
+    // the invalidation of the first variable.
 }
 
 // I AM NOT DONE
