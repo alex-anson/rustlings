@@ -104,6 +104,8 @@ fn ownership() {
     println!("s1 = {}, s2 = {}", s1, s2);
 
     ownership_and_functions();
+    return_values_and_scope();
+    return_multiple_values_with_tuple();
 }
 
 // OWNERSHIP AND FUNCTIONS
@@ -113,6 +115,12 @@ fn ownership_and_functions() {
 
     takes_ownership(s); // s's value moves into the function...
                         // ... and so is no longer valid here
+
+    /*
+        ^ ^ ^ ⭐️ this definitely feels weird to me! (just new, really) ... it makes
+        complete sense when you understand how the stack and heap operate and how
+        memory is freed.
+    */
 
     let x = 5_000; // x comes into scope
 
@@ -133,4 +141,62 @@ fn makes_copy(some_integer: i32) {
     println!("{}", some_integer);
 } // Here, some_integer goes out of scope. Nothing special happens.
 
-// I AM NOT DONE
+// RETURN VALUES AND SCOPE
+// returning values can also transfer ownership
+fn return_values_and_scope() {
+    let s1 = gives_ownership(); // gives_ownership moves its return
+                                // value into s1
+
+    println!("{} - getting ownership 💋", s1);
+
+    let s2 = String::from("hello"); // s2 comes into scope
+
+    let s3 = takes_and_gives_back(s2); // s2 is moved into
+                                       // takes_and_gives_back, which also
+                                       // moves its return value into s3
+    println!("rust is so cool... {}", s3);
+} // Here, s3 goes out of scope and is dropped. s2 was moved, so nothing
+  // happens. s1 goes out of scope and is dropped.
+
+fn gives_ownership() -> String {
+    // gives_ownership will move its return value into the function that calls it
+
+    let some_string = String::from("yours"); // some_string comes into scope
+
+    some_string // some_string is returned and moves out to the calling function
+}
+
+// This function takes a String and returns one
+fn takes_and_gives_back(mut a_string: String) -> String {
+    // a_string comes into scope
+    a_string.push_str(", worlddd");
+
+    a_string // a_string is returned and moves out to the calling function
+}
+/*
+When a variable that includes data on the heap goes out of scope, the value will be
+cleaned up by drop unless ownership of the data has been moved to another variable.
+
+While this works, taking ownership and then returning ownership with every function
+is a bit tedious. What if we want to let a function use a value but not take
+ownership?*️⃣ It’s quite annoying that anything we pass in also needs to be passed
+back if we want to use it again, in addition to any data resulting from the body
+of the function that we might want to return as well.
+
+*️⃣ achieve this with REFERENCES.
+
+- can return multiple values using a tuple:
+*/
+fn return_multiple_values_with_tuple() {
+    let s1 = String::from("hello");
+
+    let (s2, len) = calculate_length(s1);
+
+    println!("The length of '{}' is {}.", s2, len);
+}
+
+fn calculate_length(s: String) -> (String, usize) {
+    let length = s.len();
+
+    (s, length)
+}
