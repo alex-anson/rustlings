@@ -70,7 +70,7 @@ fn ownership() {
     */
 
     let s1 = String::from("hello");
-    let s2 = s1;
+    let _s2 = s1;
     /*
     the second line doesn't exactly make a copy of the value in s1 and bind it
     to s2...
@@ -106,6 +106,9 @@ fn ownership() {
     ownership_and_functions();
     return_values_and_scope();
     return_multiple_values_with_tuple();
+    with_references();
+    mutable_references();
+    // dangling_references();
 }
 
 // OWNERSHIP AND FUNCTIONS
@@ -200,3 +203,85 @@ fn calculate_length(s: String) -> (String, usize) {
 
     (s, length)
 }
+
+// references allow you to refer to some value *without* taking ownership of it
+// dereferencing operator = *
+fn with_references() {
+    let mut s1 = String::from("heeey ");
+
+    let length = ref_calc_len(&s1);
+
+    s1.push('✨');
+    println!("s1's ({}) length (before push method) was {}", s1, length)
+}
+
+// "We call the action of creating a reference borrowing."
+fn ref_calc_len(s: &String) -> usize {
+    s.len()
+}
+
+// you can't modify it if you don't own it, unless you use a mutable reference -
+fn mutable_references() {
+    // let mut a = String::new();
+    // a.push_str("🍫🍫🍫");
+    // println!("{}", a);
+    // ^ huh, cool. just thought i'd try that.. unrelated to the references chapter.
+    // ended up going to the String::new docs 🤭
+
+    let mut s = String::from("hello");
+
+    change(&mut s);
+    println!("{}", s) // hello, world
+                      // what's interesting is i don't have to return the
+                      // String from the change ƒn
+}
+
+fn change(str: &mut String) {
+    str.push_str(", world")
+}
+
+/*
+one big restriction: if you have a mutable reference to a value, you can have no
+other references to that value. This code that attempts to create two mutable
+references to s will fail =>
+
+    let mut s = String::from("hello");
+
+    let r1 = &mut s;
+    let r2 = &mut s;
+
+    println!("{}, {}", r1, r2);
+
+HOWEVER... you just can't have two mutable references SIMULTANEOUSLY --
+this code is fine =>
+
+    let mut s = String::from("hello");
+
+    {
+        let r1 = &mut s;
+    } // r1 goes out of scope here.
+
+    let r2 = &mut s;
+
+*/
+
+// fn dangling_references() {
+//     let reference_to_nothing = dangle();
+//     println!("{}", reference_to_nothing)
+// }
+
+// fn dangle() -> &String {
+//     // ^ dangle returns a reference to a String
+
+//     let s = String::from("heeyoo"); // s is a new String
+
+//     &s // we return a reference to the String `s`
+// } // s goes out of scope and is dropped (via the drop ƒn). its memory
+// // goes away ... dangerr
+
+/* ⭐️
+Because s is created inside dangle, when the code of dangle is
+finished, s will be deallocated.
+*/
+
+// different kind of reference = slices
