@@ -10,6 +10,10 @@
 // Write a function that calculates the price of an order of apples given
 // the quantity bought. No hints this time!
 
+// https://rust-analyzer.github.io/manual.html#unlinked-file
+// i did the suggested quickfix and it inserted this line:
+mod _quiz_2_blank;
+
 // Put your function here!
 fn calculate_price_of_apples(quantity_bought: u32) -> u32 {
     let mut price = 2;
