@@ -17,18 +17,15 @@ fn maybe_icecream(time_of_day: u16) -> Option<u16> {
     // We use the 24-hour system here, so 10PM is a value of 22 and 12AM is a value of 0
     // The Option output should gracefully handle cases where time_of_day > 23.
     // TODO: Complete the function body - remember to return an Option!
-    let invalid_time: Option<u16> = Some(23);
 
     while let Some(x) = Some(time_of_day) {
-        if Some(x) > invalid_time {
+        if Some(x) > Some(23) {
             return None;
         } else if Some(x) > Some(21) {
             return Some(0);
-        } else {
-            return Some(5);
         }
     }
-    Some(12) // eeep
+    Some(5)
 }
 
 #[cfg(test)]
