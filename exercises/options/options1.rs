@@ -8,8 +8,6 @@ The Option<T> enum has two variants:
 // options1.rs
 // Execute `rustlings hint options1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 // This function returns how much icecream there is left in the fridge.
 // If it's before 10PM, there's 5 pieces left. At 10PM, someone eats them
 // all, so there'll be no more left :(
@@ -18,9 +16,9 @@ fn maybe_icecream(time_of_day: u16) -> Option<u16> {
     // The Option output should gracefully handle cases where time_of_day > 23.
     // TODO: Complete the function body - remember to return an Option!
 
-    if Some(time_of_day) > Some(23) {
+    if time_of_day > 23 {
         return None;
-    } else if Some(time_of_day) > Some(21) {
+    } else if time_of_day > 21 {
         return Some(0);
     } else {
         return Some(5);
