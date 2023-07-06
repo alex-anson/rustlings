@@ -5,6 +5,49 @@
 // construct to `Option` that can be used to express error conditions. Let's use it!
 // Execute `rustlings hint errors1` or use the `hint` watch subcommand for a hint.
 
+use std::num::ParseIntError;
+
+/*
+NOTE: FROM THE BOOK
+https://doc.rust-lang.org/rust-by-example/error/result/result_map.html
+generally want to return the error to the caller, so it can decide the right way to respond
+*/
+
+// As with `Option`, we can use combinators such as `map()`.
+// This function reads:
+// Multiply if both values can be parsed from str, otherwise pass on the error.
+fn multiply(first_number_str: &str, second_number_str: &str) -> Result<i32, ParseIntError> {
+    first_number_str.parse::<i32>().and_then(|first_number| {
+        second_number_str
+            .parse::<i32>()
+            .map(|second_number| first_number * second_number)
+    })
+}
+
+fn print(result: Result<i32, ParseIntError>) {
+    match result {
+        Ok(n) => println!("Number is {}", n),
+        Err(e) => println!("Error: {}", e),
+    }
+}
+
+fn main() {
+    println!("");
+    println!("");
+    println!("");
+
+    let twenty = multiply("10", "2");
+    print(twenty);
+
+    // The following now provides a much more helpful error message.
+    let tt = multiply("t", "2");
+    print(tt);
+
+    println!("");
+    println!("");
+    println!("");
+}
+
 pub fn generate_nametag_text(name: String) -> Result<String, String> {
     if name.is_empty() {
         // Empty names aren't allowed.
@@ -33,5 +76,11 @@ mod tests {
             // Don't change this line
             Err("`name` was empty; it must be nonempty.".into())
         );
+    }
+
+    #[test]
+    fn negative_batman() {
+        main();
+        assert_eq!(12, 12)
     }
 }
