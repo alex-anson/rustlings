@@ -9,6 +9,43 @@
 // implementing this trait.
 // Execute `rustlings hint traits1` or use the `hint` watch subcommand for a hint.
 
+use std::fmt::format;
+
+pub trait Summary {
+    // "Each type implementing this trait must provide its
+    // own custom behavior for the body of the method"
+    fn summarize(&self) -> String;
+}
+
+pub struct NewsArticle {
+    pub headline: String,
+    pub location: String,
+    pub author: String,
+    pub content: String,
+}
+
+pub struct Tweet {
+    pub username: String,
+    pub content: String,
+    pub reply: bool,
+    pub retweet: bool,
+}
+
+// NewsArticle is a type that implements the Summary trait.
+// NewsArticle needs to provide a `summary` method that matches
+// the method signature contained in the Summary trait.
+impl Summary for NewsArticle {
+    fn summarize(&self) -> String {
+        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    }
+}
+
+impl Summary for Tweet {
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.username, self.content)
+    }
+}
+
 trait AppendBar {
     fn append_bar(self) -> Self;
 }
