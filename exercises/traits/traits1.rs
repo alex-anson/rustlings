@@ -15,6 +15,13 @@ pub trait Summary {
     // "Each type implementing this trait must provide its
     // own custom behavior for the body of the method"
     fn summarize(&self) -> String;
+
+    fn i_aunno(&self) {
+        println!(
+            "this is what's known as a default implementation. \
+        it does the same thing for every type associated with this trait"
+        )
+    }
 }
 
 pub struct NewsArticle {
@@ -40,6 +47,7 @@ impl Summary for NewsArticle {
     }
 }
 
+// impl TraitName for Type
 impl Summary for Tweet {
     fn summarize(&self) -> String {
         format!("{}: {}", self.username, self.content)
@@ -59,6 +67,27 @@ impl AppendBar for String {
 }
 
 fn main() {
+    let tweet = Tweet {
+        username: "alexan_dev".to_string(),
+        content: "cool tweet bruh".to_string(),
+        reply: true,
+        retweet: true,
+    };
+    let article = NewsArticle {
+        headline: "headline".to_string(),
+        location: "chicago".to_string(),
+        author: "x".to_string(),
+        content: "a bunch of content here... ".to_string(),
+    };
+
+    format!("{:?}", tweet.i_aunno());
+    format!("{:?}", article.i_aunno());
+    println!();
+    println!("🐣 new tweet: {}", tweet.summarize());
+    println!();
+    println!("new article: {}", article.summarize());
+    println!();
+
     let s = String::from("Foo");
     let s = s.append_bar();
     println!("s: {}", s);
@@ -79,5 +108,11 @@ mod tests {
             String::from("").append_bar().append_bar(),
             String::from("BarBar")
         );
+    }
+
+    #[test]
+    fn negative_batman() {
+        main();
+        assert_eq!(12, 12)
     }
 }
