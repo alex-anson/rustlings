@@ -10,11 +10,11 @@ fn main() {
     // stored in it. because of the `clone` method
     let mut vec1 = fill_vec(vec0);
 
-    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1); // vec1 has length 3 content `[22, 44, 66]`
 
     vec1.push(88);
 
-    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1); // vec1 has length 4 content `[22, 44, 66, 88]`
 }
 
 fn fill_vec(mut vec: Vec<i32>) -> Vec<i32> {

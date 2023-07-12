@@ -11,11 +11,11 @@ fn main() {
 
     let mut vec1 = fill_vec(vec0);
 
-    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1); // vec1 has length 3 content `[22, 44, 66]`
 
     vec1.push(88);
 
-    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1); // vec1 has length 4 content `[22, 44, 66, 88]`
 
     println!();
     ownership();
@@ -103,6 +103,14 @@ fn ownership() {
 
     println!("s1 = {}, s2 = {}", s1, s2);
 
+    let s1 = "string slice works";
+    let s2 = s1;
+    println!("s1 = {}, s2 = {}", s1, s2);
+
+    // if i'm understanding this correctly, transferring ownership only
+    // applies to data stored in the heap. doesn't apply to simple types
+    // (i.e. str, i32)
+
     ownership_and_functions();
     return_values_and_scope();
     return_multiple_values_with_tuple();
@@ -130,6 +138,7 @@ fn ownership_and_functions() {
     makes_copy(x); // x would move into the function,
                    // but i32 is Copy, so it's okay to still
                    // use x afterward
+    println!("can still use x: {}", x)
 } // Here, x goes out of scope, then s. But because s's value was moved, nothing
   // special happens.
 
