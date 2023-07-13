@@ -33,6 +33,18 @@ without affecting the lifetimes. Just as functions can accept any type when the
 signature specifies a generic type parameter, functions can accept references with
 any lifetime by specifying a generic lifetime parameter.
 */
+
+/*
+after 4 hours, it's getting less confusing.
+
+A lifetime is a construct of the compiler (or more specifically, its borrow
+checker), used to ensure all borrows are valid. Specifically, a variable's
+lifetime begins when it is created and ends when it is destroyed. While
+lifetimes and scopes are often referred to together, they are not the same.
+*/
+
+//              input lifetimes     |   output lifetime
+//         ⌄       ⌄            ⌄           ⌄
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     /*
     ^ ^ ^ the signature expresses the following constraint: the returned
@@ -65,6 +77,10 @@ fn main() {
 
     let result = longest(string1.as_str(), string2);
     println!("The longest string is '{}'", result);
+
+    println!();
+    println!();
+    lifetime_illustration()
 }
 
 /*
@@ -88,3 +104,30 @@ an i32 that also has the lifetime 'a.
 &'a i32     // a reference with an explicit lifetime
 &'a mut i32 // a mutable reference with an explicit lifetime
 */
+
+/*
+Lifetimes are annotated below with lines denoting the creation
+and destruction of each variable.
+`i` has the longest lifetime because its scope entirely encloses
+both `borrow1` and `borrow2`. The duration of `borrow1` compared
+to `borrow2` is irrelevant since they are disjoint.
+*/
+fn lifetime_illustration() {
+    let i = 3; // Lifetime for `i` starts. ────────────────┐
+               //                                          │
+    {
+        //                                                 │
+        let borrow1 = &i; // `borrow1` lifetime starts. ──┐│
+                          //                              ││
+        println!("borrow1: {}", borrow1); //              ││
+    } // `borrow1` ends. ─────────────────────────────────┘│
+      //                                                   │
+      //                                                   │
+    {
+        //                                                 │
+        let borrow2 = &i; // `borrow2` lifetime starts. ──┐│
+                          //                              ││
+        println!("borrow2: {}", borrow2); //              ││
+    } // `borrow2` ends. ─────────────────────────────────┘│
+      //                                                   │
+} // Lifetime ends. ───────────────────────────────────────┘
